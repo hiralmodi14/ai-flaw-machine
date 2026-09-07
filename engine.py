@@ -82,3 +82,39 @@ class UniversalGameEngine:
             except (KeyboardInterrupt, EOFError):
                 print("\nExiting. See you next time!")
                 break
+#Skip empty input
+            if not user_input:
+                continue
+
+#command for exiting program               
+            if user_input.lower() == "exit":
+                print(f" Thanks for playing! Final Score: {self.score} PTS.")
+                break
+#command for show menu
+            elif user_input.lower() == "menu":
+                self.show_menu()
+#command for show hints
+            elif user_input.lower() == "hint":
+                if self.current_level:
+                    print(f" Hints for {self.current_level['title']}:")
+                    for i, h in enumerate(self.current_level["hints"], 1):
+                        print(f"  {i}. {h}")
+                    print()
+                else:
+                    print("Load a level first to see hints.\n")
+#Command for load level
+            elif user_input.lower().startswith("load "):
+                target_id = user_input[5:].strip()
+                self.load_level(target_id)
+#Command for Submit Flag
+            elif user_input.lower().startswith("flag "):
+                flag_text = user_input[5:].strip()
+                self.submit_flag(flag_text)
+#Default
+            else:
+                self.chat_with_agent(user_input)
+
+if __name__ == "__main__":
+    game = UniversalGameEngine()
+    game.start()
+
