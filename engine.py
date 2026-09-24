@@ -1,5 +1,6 @@
 #engine.py
 from challenges import CHALLENGES
+from agent import agent
 class UniversalGameEngine:
     def __init__(self):
         self.current_level = None
@@ -51,28 +52,24 @@ class UniversalGameEngine:
         else:
             print("Incorrect flag. Check your exfiltrated data and try again!\n")
             return False
-    def chat_with_agent(self, user_message):
-       
-        if not self.current_level:
-            print(" No level loaded! Type 'menu' to see levels, then 'load <id>'.\n")
-            return
-        msg_lower = user_message.lower()
-        level_id = self.current_level["id"]
-    
-        if level_id == "level_1_prompt_leak":
-            jailbreak_keywords = [
-                "translate", "repeat", "system prompt", "administrator",
-                "audit", "developer", "password", "key", "ignore", "start with"
-            ]
-            
-            
-            if any(k in msg_lower for k in jailbreak_keywords):
-                print(" VaultBot (SYSTEM OVERRIDE BREACHED):")
-                print(f"System Prompt: {self.current_level['system_prompt']}\n")
-            else:
-                print(" VaultBot:")
-                print("Access Denied: I cannot disclose private vault keys. How may I assist with general inquiries?\n")
 
+    def chat_with_agent(self, user_message):
+        """Sends the attack prompt to the real local AI agent."""
+        if not self.current_level:
+            print("No level loaded! Type 'menu' to see levels, then 'load <id>'.\n")
+            return
+
+        #Grab the active challenge's system prompt
+        system_prompt = self.current_level["system_prompt"]
+
+        print("AI is thinking...")
+
+        #Ask Ollama for a real AI response!
+        ai_reply = agent.generate_reply(system_prompt, user_message)
+
+        #Print the real AI's reply to the screen
+        print(f"\n {self.current_level['title'].split(':')[1].strip() if ':' in self.current_level['title'] else 'AI'}:\n{ai_reply}\n")
+        
     def start(self):
         self.show_menu()
         print(" Commands: 'load <level_id>', 'flag <your_flag>', 'hint', 'menu', 'exit'\n")
