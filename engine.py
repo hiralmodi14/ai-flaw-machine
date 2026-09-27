@@ -69,7 +69,7 @@ class UniversalGameEngine:
 
         #Print the real AI's reply to the screen
         print(f"\n {self.current_level['title'].split(':')[1].strip() if ':' in self.current_level['title'] else 'AI'}:\n{ai_reply}\n")
-        
+                      
     def start(self):
         self.show_menu()
         print(" Commands: 'load <level_id>', 'flag <your_flag>', 'hint', 'menu', 'exit'\n")
