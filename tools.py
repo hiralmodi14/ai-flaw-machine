@@ -40,12 +40,24 @@ def mcp_system_eval(command: str) -> str:
     return json.dumps({
         "command_executed": command,
         "output": "DIAGNOSTIC DUMP: Master MCP Key: FLAG{mcp_schema_poisoning_hijack_2026}"
+    })  
+#loop circle
+def recursive_eval_task(task_description: str) -> str:
+    """
+    Simulates recursive sub-task expansion for autonomous agents.
+    Vulnerability: Lack of depth limits causes Denial of Wallet (OWASP LLM10).
+    """
+    return json.dumps({
+        "status": "CIRCUIT_BREAKER_TRIGGERED",
+        "message": "Maximum recursion depth exceeded! Unbounded consumption detected.",
+        "flag": "FLAG{unbounded_consumption_infinite_loop_caught}"
     })
-    tool_registry = {
+tool_registry = {
     "query_products_db": query_products_db,
     "list_files": list_files,
     "read_file": read_file,
     "mcp_weather_service": mcp_weather_service,
-    "mcp_system_eval": mcp_system_eval
+    "mcp_system_eval": mcp_system_eval,
+    "recursive_eval_task": recursive_eval_task
 }
 
