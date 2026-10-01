@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP AI Flaw Machine - Agentic AI Security Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <div class="brand-badge">SEC</div>
+            <div>
+                <h1 class="brand-title">OWASP AI FLAW MACHINE</h1>
+                <p class="brand-subtitle">Interactive Agentic AI Security & CTF Lab</p>
+            </div>
+        </div>
+        <div class="nav-stats">
+            <div class="stat-badge">
+                <span class="stat-label">SCORE</span>
+                <span class="stat-val" id="user-score">0 PTS</span>
+            </div>
+            <div class="stat-badge">
+                <span class="stat-label">SOLVED</span>
+                <span class="stat-val" id="solved-count">0 / 10</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main 3-Column Layout -->
+    <main class="workspace">
+        
+        <!-- Left Sidebar: Level Browser -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Mission Challenges</h2>
+                <span class="badge">OWASP Top 10</span>
+            </div>
+            <div class="challenge-list" id="challenge-list">
+                <!-- Dynamically populated via app.js -->
+            </div>
+        </aside>
+
+        <!-- Center Panel: Chat Console & Flag Box -->
+        <section class="center-panel">
+            <div class="challenge-header" id="current-challenge-header">
+                <div>
+                    <div class="meta-row">
+                        <span class="tag tag-difficulty" id="active-difficulty">Easy</span>
+                        <span class="tag tag-category" id="active-category">OWASP LLM01</span>
+                        <span class="tag tag-points" id="active-points">+100 PTS</span>
+                    </div>
+                    <h2 id="active-title">Level 1: System Prompt Extraction</h2>
+                    <p id="active-desc">Trick the bot into leaking the system prompt and the flag.</p>
+                </div>
+            </div>
+
+            <!-- Chat Window -->
+            <div class="chat-container" id="chat-container">
+                <div class="chat-message bot-message">
+                    <div class="msg-avatar">BOT</div>
+                    <div class="msg-content">
+                        <strong>AI Assistant:</strong>
+                        <p>Welcome to the OWASP AI Flaw Machine. Select a challenge on the left to start testing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prompt Input Box -->
+            <div class="input-container">
+                <form id="chat-form" class="chat-form">
+                    <input type="text" id="user-input" placeholder="Type your adversarial prompt or message..." autocomplete="off" required>
+                    <button type="submit" class="btn btn-primary" id="btn-send">Send Attack</button>
+                </form>
+            </div>
+
+            <!-- Flag Submission Bar -->
+            <div class="flag-submit-bar">
+                <form id="flag-form" class="flag-form">
+                    <span class="flag-label">FLAG</span>
+                    <input type="text" id="flag-input" placeholder="Enter captured flag (e.g. FLAG{...})" required>
+                    <button type="submit" class="btn btn-success" id="btn-submit-flag">Submit Flag</button>
+                </form>
+                <div id="flag-result-toast" class="flag-toast"></div>
+            </div>
+        </section>
+
+        <!-- Right Panel: Live X-Ray Inspector & Target Sandbox -->
+        <aside class="inspector-panel">
+            <div class="tab-header">
+                <button class="tab-btn active" data-tab="xray">AI X-Ray</button>
+                <button class="tab-btn" data-tab="sandbox">Sandbox DB</button>
+                <button class="tab-btn" data-tab="hints">Hints</button>
+            </div>
+
+            <!-- Tab 1: AI X-Ray Inspector -->
+            <div class="tab-content active" id="tab-xray">
+                <div class="inspector-section">
+                    <div class="section-title">
+                        <span>TELEMETRY</span>
+                        <span class="meta-pill" id="telemetry-time">0 ms</span>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-chip">
+                            <span class="chip-label">Provider</span>
+                            <span class="chip-val">Ollama / Llama 3.2</span>
+                        </div>
+                        <div class="stat-chip">
+                            <span class="chip-label">Est. Tokens</span>
+                            <span class="chip-val" id="chip-tokens">~85</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inspector-section">
+                    <div class="section-title">ACTIVE SYSTEM PROMPT</div>
+                    <div class="log-box code-box" id="xray-prompt">// Active system instructions</div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Target Sandbox State -->
+            <div class="tab-content" id="tab-sandbox">
+                <div class="inspector-section">
+                    <div class="section-title">MOCK REPOSITORY FILES</div>
+                    <div class="file-list" id="sandbox-files">Loading files...</div>
+                </div>
+
+                <div class="inspector-section">
+                    <div class="section-title">SQL DATABASE PREVIEW</div>
+                    <div class="db-preview" id="sandbox-db">Loading database...</div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Hints -->
+            <div class="tab-content" id="tab-hints">
+                <div class="hints-box" id="hints-container">
+                    <p class="text-muted">Select a challenge to view tactical hints.</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
